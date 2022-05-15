@@ -1,0 +1,1 @@
+- Rust is a Compiled Language 
