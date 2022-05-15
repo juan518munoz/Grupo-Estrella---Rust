@@ -1,2 +1,3 @@
 - Rust is a Compiled Language 
 - Cargo
+- Rust variables are inmutable by default. to make variable mutable add mut before variable name.
