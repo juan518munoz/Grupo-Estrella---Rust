@@ -1,0 +1,12 @@
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\deps\libc-a613adf7e16cf6ec.rmeta: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\macros.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\fixed_width_ints.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\mod.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\mod.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\align.rs
+
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\deps\liblibc-a613adf7e16cf6ec.rlib: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\macros.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\fixed_width_ints.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\mod.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\mod.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\align.rs
+
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\deps\libc-a613adf7e16cf6ec.d: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\macros.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\fixed_width_ints.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\mod.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\mod.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\align.rs
+
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\lib.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\macros.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\fixed_width_ints.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\mod.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\mod.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.125\src\windows\gnu\align.rs:

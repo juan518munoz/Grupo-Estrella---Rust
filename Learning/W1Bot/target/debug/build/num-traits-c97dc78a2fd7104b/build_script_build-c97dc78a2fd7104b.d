@@ -1,0 +1,5 @@
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\build\num-traits-c97dc78a2fd7104b\build_script_build-c97dc78a2fd7104b.exe: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\num-traits-0.2.15\build.rs
+
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\build\num-traits-c97dc78a2fd7104b\build_script_build-c97dc78a2fd7104b.d: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\num-traits-0.2.15\build.rs
+
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\num-traits-0.2.15\build.rs:

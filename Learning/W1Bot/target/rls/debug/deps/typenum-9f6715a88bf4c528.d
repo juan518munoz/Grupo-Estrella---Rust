@@ -1,0 +1,18 @@
+c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\deps\typenum-9f6715a88bf4c528.rmeta: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\bit.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\int.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\marker_traits.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\operator_aliases.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\private.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\type_operators.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\uint.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\array.rs c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\build\typenum-81fcded9a282014d\out\op.rs c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\build\typenum-81fcded9a282014d\out\consts.rs
+
+c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\deps\typenum-9f6715a88bf4c528.d: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\bit.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\int.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\marker_traits.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\operator_aliases.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\private.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\type_operators.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\uint.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\array.rs c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\build\typenum-81fcded9a282014d\out\op.rs c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\build\typenum-81fcded9a282014d\out\consts.rs
+
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\lib.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\bit.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\int.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\marker_traits.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\operator_aliases.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\private.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\type_operators.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\uint.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\typenum-1.15.0\src\array.rs:
+c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\build\typenum-81fcded9a282014d\out\op.rs:
+c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\build\typenum-81fcded9a282014d\out\consts.rs:
+
+# env-dep:TYPENUM_BUILD_CONSTS=c:\\Users\\Juan\\Documents\\Facultad\\TdL\\D\\DiscordBot\\target\\rls\\debug\\build\\typenum-81fcded9a282014d\\out\\consts.rs
+# env-dep:TYPENUM_BUILD_OP=c:\\Users\\Juan\\Documents\\Facultad\\TdL\\D\\DiscordBot\\target\\rls\\debug\\build\\typenum-81fcded9a282014d\\out\\op.rs

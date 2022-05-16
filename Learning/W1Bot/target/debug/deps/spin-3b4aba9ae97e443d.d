@@ -1,0 +1,10 @@
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\deps\spin-3b4aba9ae97e443d.rmeta: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\mutex.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\rw_lock.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\once.rs
+
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\deps\libspin-3b4aba9ae97e443d.rlib: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\mutex.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\rw_lock.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\once.rs
+
+C:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\debug\deps\spin-3b4aba9ae97e443d.d: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\mutex.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\rw_lock.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\once.rs
+
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\lib.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\mutex.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\rw_lock.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\spin-0.5.2\src\once.rs:

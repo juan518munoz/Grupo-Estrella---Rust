@@ -1,0 +1,11 @@
+c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\deps\digest-0e01f619653c9c0e.rmeta: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\ct_variable.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\rt_variable.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\wrapper.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\xof_reader.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\digest.rs
+
+c:\Users\Juan\Documents\Facultad\TdL\D\DiscordBot\target\rls\debug\deps\digest-0e01f619653c9c0e.d: C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\lib.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\ct_variable.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\rt_variable.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\wrapper.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\xof_reader.rs C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\digest.rs
+
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\lib.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\ct_variable.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\rt_variable.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\wrapper.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\core_api\xof_reader.rs:
+C:\Users\Juan\.cargo\registry\src\github.com-1ecc6299db9ec823\digest-0.10.3\src\digest.rs:

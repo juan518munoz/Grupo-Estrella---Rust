@@ -1,0 +1,4 @@
+var searchIndex = JSON.parse('{\
+"linked_list":{"doc":"","t":[3,11,11,11,12,11,11,5,11,12,11,11,11],"n":["Node","add","borrow","borrow_mut","elem","from","into","main","new","next","try_from","try_into","type_id"],"q":["linked_list","","","","","","","","","","","",""],"d":["","","","","","Returns the argument unchanged.","Calls <code>U::from(self)</code>.","","","","","",""],"i":[0,1,1,1,1,1,1,0,1,1,1,1,1],"f":[null,[[["",0]]],[[["",0]],["",0]],[[["",0]],["",0]],null,[[]],[[]],[[]],[[]],null,[[],["result",4]],[[],["result",4]],[[["",0]],["typeid",3]]],"p":[[3,"Node"]]}\
+}');
+if (window.initSearch) {window.initSearch(searchIndex)};
