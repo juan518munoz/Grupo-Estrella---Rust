@@ -1,1 +1,0 @@
-{"rustc":9310494685402249036,"features":"","target":0,"profile":0,"path":0,"deps":[[244750563138738590,"build_script_build",false,3265272448696537989]],"local":[{"RerunIfChanged":{"output":"debug\\build\\futures-util-82fdf68e721b149c\\output","paths":["no_atomic_cas.rs"]}}],"rustflags":[],"metadata":0,"config":0,"compile_kind":0}

@@ -1,1 +1,6 @@
-hola
+Dependencias para hacer correr el bot:
+
+apt install libopus-dev
+apt install build-essential autoconf automake libtool m4
+apt install ffmpeg
+pip3 install youtube_dl

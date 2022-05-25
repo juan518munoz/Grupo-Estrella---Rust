@@ -1,3 +1,0 @@
-(function() {var implementors = {};
-implementors["linked_list"] = [{"text":"impl&lt;T&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/1.60.0/core/marker/trait.Freeze.html\" title=\"trait core::marker::Freeze\">Freeze</a> for <a class=\"struct\" href=\"linked_list/struct.Node.html\" title=\"struct linked_list::Node\">Node</a>&lt;T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class=\"trait\" href=\"https://doc.rust-lang.org/1.60.0/core/marker/trait.Freeze.html\" title=\"trait core::marker::Freeze\">Freeze</a>,&nbsp;</span>","synthetic":true,"types":["linked_list::Node"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
