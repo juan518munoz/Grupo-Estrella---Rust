@@ -26,8 +26,6 @@ use serenity::{
 
 struct Handler;
 
-// https://docs.rs/songbird/latest/songbird/driver/struct.Driver.html#
-
 // join voice channel
 pub async fn join(ctx: &Context, msg: &Message){
     let guild = msg.guild(&ctx.cache).await.unwrap();
@@ -84,6 +82,25 @@ pub async fn play(ctx: &Context, msg: &Message) {
     } else {
         check_msg(msg.channel_id.say(&ctx.http, "Not in a voice channel to play in").await);
     }
+
+}
+
+// !!!!
+// https://docs.rs/songbird/latest/songbird/driver/struct.Driver.html#
+// !!!!
+
+// Pausa el reproductor de musica
+pub async fn pause(){
+
+}
+
+// Resume el reproductor de musica
+pub async fn resume(){
+
+}
+
+// Añade una cancion a la cola de reproduccion
+async fn add_queue(){
 
 }
 

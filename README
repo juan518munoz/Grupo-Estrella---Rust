@@ -1,5 +1,4 @@
 Dependencias para hacer correr el bot:
-
 - apt install libopus-dev
 - apt install build-essential autoconf automake libtool m4
 - apt install ffmpeg
