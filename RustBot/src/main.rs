@@ -1,3 +1,6 @@
+extern crate dotenv;
+
+use dotenv::dotenv;
 use std::env;
 
 mod mplayer;
@@ -14,15 +17,15 @@ use serenity::{
     async_trait,
     client::{Client, EventHandler},
     framework::{
-        StandardFramework,
         standard::{
-            Args, CommandResult, Delimiter,
             macros::{command, group},
+            Args, CommandResult, Delimiter,
         },
+        StandardFramework,
     },
     model::{channel::Message, gateway::Ready},
-    Result as SerenityResult,
     prelude::*,
+    Result as SerenityResult,
 };
 
 struct Handler;
@@ -30,16 +33,21 @@ struct Handler;
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
-        if msg.content == "!help" {
+        let character_discord = env::var("CHARACTER_BOT").expect("Character not found");
+        //Create a Hash table or soemthing to manage commands of discord bot.
+        let command_help = String::from(character_discord.to_string() + "help");
+        let command_play = String::from(character_discord.to_string() + "play");
+        let command_stop = String::from(character_discord.to_string() + "stop");
+        if msg.content == command_help {
             if let Err(why) = msg.channel_id.say(&ctx.http, "Aiuuuda").await {
                 println!("Error sending message: {:?}", why);
             }
-        }
-        else if msg.content.starts_with("!play") { 
+        } else if msg.content.starts_with(&command_play) {
             mplayer::play(&ctx, &msg).await;
+        } else if msg.content == command_stop {
+            mplayer::pause(&ctx, &msg).await;
         }
     }
-    
     async fn ready(&self, _: Context, ready: Ready) {
         println!("{} is connected!", ready.user.name);
     }
@@ -51,12 +59,11 @@ struct General;
 #[tokio::main]
 async fn main() {
     // Solicita token del bot al iniciarse
-    let token = env::var("DISCORD_TOKEN")
-        .expect("Expected a token in the environment");
+    dotenv().ok();
+    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
 
     let framework = StandardFramework::new()
-        .configure(|c| c
-                   .prefix("!"))
+        .configure(|c| c.prefix("!"))
         .group(&GENERAL_GROUP);
 
     let mut client = Client::builder(&token)
@@ -67,9 +74,11 @@ async fn main() {
         .expect("Err creating client");
 
     tokio::spawn(async move {
-        let _ = client.start().await.map_err(|why| println!("Client ended: {:?}", why));
+        let _ = client
+            .start()
+            .await
+            .map_err(|why| println!("Client ended: {:?}", why));
     });
-    
     tokio::signal::ctrl_c().await;
     println!("Chauu.");
 }

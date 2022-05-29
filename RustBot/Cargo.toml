@@ -9,3 +9,4 @@ edition = "2021"
 serenity = { version = "0.10", default-features = false, features = ["cache", "framework", "standard_framework", "voice", "http", "rustls_backend"]}
 tokio = { version = "1.18.2", features = ["macros", "rt-multi-thread", "signal"]}
 songbird = { version = "0.2.2", features = ["builtin-queue"] }
+dotenv = "0.15.0"
