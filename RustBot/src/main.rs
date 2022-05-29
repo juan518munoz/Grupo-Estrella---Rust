@@ -35,9 +35,9 @@ impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
         let character_discord = env::var("CHARACTER_BOT").expect("Character not found");
         //Create a Hash table or soemthing to manage commands of discord bot.
-        let command_help = String::from(character_discord.to_string() + "help");
-        let command_play = String::from(character_discord.to_string() + "play");
-        let command_stop = String::from(character_discord.to_string() + "stop");
+        let command_help = format!("{}{}", character_discord, "help");
+        let command_play = format!("{}{}", character_discord, "play");
+        let command_stop = format!("{}{}", character_discord, "stop");
         if msg.content == command_help {
             if let Err(why) = msg.channel_id.say(&ctx.http, "Aiuuuda").await {
                 println!("Error sending message: {:?}", why);
