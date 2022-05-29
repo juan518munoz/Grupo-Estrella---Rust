@@ -1,3 +1,11 @@
-- Rust is a Compiled Language 
-- Cargo
-- Rust variables are inmutable by default. to make variable mutable add mut before variable name.
+-   Rust is a Compiled Language
+-   Cargo
+-   Rust variables are inmutable by default. to make variable mutable add mut before variable name.
+-   Rust has a strong, static type, but has type inference.
+-   Shadow values to overwrite previous value with new one.
+-   match looks like pattern matching.
+-   Shadow vs mut.
+-   Tuples (has Destructuring) every unit of tuple has his own type (Fixed Length).
+-   Array (Fixed length).
+-   Statements and Expressions.
+-   Garbage collector vs OwnerShip.
