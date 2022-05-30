@@ -1,12 +1,1 @@
-Dependencias para hacer correr el bot:
-- apt install libopus-dev
-- apt install build-essential autoconf automake libtool m4
-- apt install ffmpeg
-- pip3 install youtube_dl
-
-Compilar el bot con:
-- cargo build
-
-Ejecutar el bot con:
-- cargo run ("necesitas .env configurado")
-- DISCORD_TOKEN=token_bot ./target/debug/discord_bot ..
+Discord Bot
