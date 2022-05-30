@@ -8,4 +8,4 @@ Compilar el bot con:
 - cargo build
 
 Ejecutar el bot con:
-- DISCORD_TOKEN=token_bot ./target/debug/discord_bot ..
+- DISCORD_TOKEN=token_bot ./target/debug/discord_bot
