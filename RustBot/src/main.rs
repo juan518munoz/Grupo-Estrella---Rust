@@ -34,8 +34,7 @@ struct Handler;
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
-        let character_discord = env::var("CHARACTER_BOT").expect("Character not found");
-        let command = command::get_command(&msg); // Chequear que el caracter_discord sea igual al que esta en el .env
+        let command = command::get_command(&msg);
         
         if command == "help" {
             if let Err(why) = msg.channel_id.say(&ctx.http, "Aiuuuda").await {
