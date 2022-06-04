@@ -132,8 +132,8 @@ pub async fn skip(ctx: &Context, msg: &Message) {
     }
 }
 
-// Detiene y elemina la reproduccion de todas las canciones en el reproductor de musica
-async fn stop(ctx: &Context, msg: &Message) {
+//Stop songs
+pub async fn stop(ctx: &Context, msg: &Message) {
     join(&ctx, &msg).await;
     let guild = msg.guild(&ctx.cache).await.unwrap();
     let guild_id = guild.id;
@@ -165,16 +165,40 @@ pub async fn leave(ctx: &Context, msg: &Message){
         None => {
             // El usuario no esta en un canal de voz
             check_msg(msg.reply(ctx, "No estas conectado a un canal").await);
+            // Agregar verficacion que el bot este en un canal de voz
             return;
         }
     };
 
-    stop(&ctx, &msg).await;
-    let manager = songbird::get(ctx)
-        .await
-        .expect("Songbird Voice client placed in at initialisation.")
-        .clone();  
-    let _handler = manager.leave(guild.id).await;}
+    stop(&ctx, &msg).await;                   
+    let manager = songbird::get(ctx)                                  
+        .await                                                          
+        .expect("Songbird Voice client placed in at initialisation.")   
+        .clone();                                                       
+    let _handler = manager.leave(guild.id).await;
+
+    // reemplazo desde stop(&ctx, &msg).await;  hasta el final de la funcion
+    /*clear_queue(&ctx, &msg).await;
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
+        let mut handler = handler_lock.lock().await;
+        handler.leave().await;
+    }*/
+
+}
+
+// Detiene y elemina la reproduccion de todas las canciones en el reproductor de musica
+async fn clear_queue(ctx: &Context, msg: &Message) {
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
+        let mut handler = handler_lock.lock().await;
+        let queue = handler.queue();
+
+        // iterate over the queue and clear it
+        let queue_len = queue.len();
+        for _ in 0..queue_len {
+            queue.skip();
+        }
+    }
+}
 
 // Devuelve la llamada asociada al servidor
 async fn get_manager(ctx: &Context, msg: &Message) -> Option<Arc<Mutex<Call>>> {
