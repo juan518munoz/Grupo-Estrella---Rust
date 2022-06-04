@@ -102,7 +102,7 @@ pub async fn pause(ctx: &Context, msg: &Message) {
         let queue = handler.queue();
         queue.pause();
         
-        let message = String::from("Stopped all songs");
+        let message = String::from("Paused all songs");
         check_msg(msg.channel_id.say(&ctx.http, &message).await);
     }
 }
@@ -131,6 +131,50 @@ pub async fn skip(ctx: &Context, msg: &Message) {
         check_msg(msg.channel_id.say(&ctx.http, &message).await);
     }
 }
+
+// Detiene y elemina la reproduccion de todas las canciones en el reproductor de musica
+async fn stop(ctx: &Context, msg: &Message) {
+    join(&ctx, &msg).await;
+    let guild = msg.guild(&ctx.cache).await.unwrap();
+    let guild_id = guild.id;
+
+    let manager = songbird::get(ctx)
+        .await
+        .expect("Songbird Voice client placed in at initialisation.")
+        .clone();
+
+    if let Some(handler_lock) = manager.get(guild_id) {
+        let mut handler = handler_lock.lock().await;
+        handler.stop();
+        let message = String::from("Stopped all songs");
+        check_msg(msg.channel_id.say(&ctx.http, &message).await);
+    }
+}
+
+// Quita al bot del canal de voz
+pub async fn leave(ctx: &Context, msg: &Message){
+    let guild = msg.guild(&ctx.cache).await.unwrap();
+
+    let channel_id = guild
+        .voice_states
+        .get(&msg.author.id)
+        .and_then(|voice_state| voice_state.channel_id);
+
+    let connect_to = match channel_id {
+        Some(channel) => channel,
+        None => {
+            // El usuario no esta en un canal de voz
+            check_msg(msg.reply(ctx, "No estas conectado a un canal").await);
+            return;
+        }
+    };
+
+    stop(&ctx, &msg).await;
+    let manager = songbird::get(ctx)
+        .await
+        .expect("Songbird Voice client placed in at initialisation.")
+        .clone();  
+    let _handler = manager.leave(guild.id).await;}
 
 // Devuelve la llamada asociada al servidor
 async fn get_manager(ctx: &Context, msg: &Message) -> Option<Arc<Mutex<Call>>> {

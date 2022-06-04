@@ -42,13 +42,16 @@ impl EventHandler for Handler {
             }
         } else if command == "play" {
             mplayer::play(&ctx, &msg).await;
-        } else if command == "stop" {
+        } else if command == "pause" {
             mplayer::pause(&ctx, &msg).await;
         } else if command == "resume" {
             mplayer::resume(&ctx, &msg).await;
         } else if command == "skip" {
             mplayer::skip(&ctx, &msg).await;
+        } else if command == "leave" {
+            mplayer::leave(&ctx, &msg).await;
         }
+
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
