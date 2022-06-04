@@ -8,4 +8,5 @@ Compilar el bot con:
 - cargo build
 
 Ejecutar el bot con:
-- ./target/debug/discord_bot
+- cargo run ("necesitas .env configurado")
+- DISCORD_TOKEN=token_bot ./target/debug/discord_bot ..

@@ -1,4 +1,5 @@
 use std::env;
+use serenity::model::prelude::Guild;
 
 // This trait adds the `register_songbird` and `register_songbird_with` methods
 // to the client builder below, making it easy to install this voice client.
@@ -132,25 +133,6 @@ pub async fn skip(ctx: &Context, msg: &Message) {
     }
 }
 
-//Stop songs
-pub async fn stop(ctx: &Context, msg: &Message) {
-    join(&ctx, &msg).await;
-    let guild = msg.guild(&ctx.cache).await.unwrap();
-    let guild_id = guild.id;
-
-    let manager = songbird::get(ctx)
-        .await
-        .expect("Songbird Voice client placed in at initialisation.")
-        .clone();
-
-    if let Some(handler_lock) = manager.get(guild_id) {
-        let mut handler = handler_lock.lock().await;
-        handler.stop();
-        let message = String::from("Stopped all songs");
-        check_msg(msg.channel_id.say(&ctx.http, &message).await);
-    }
-}
-
 // Quita al bot del canal de voz
 pub async fn leave(ctx: &Context, msg: &Message){
     let guild = msg.guild(&ctx.cache).await.unwrap();
@@ -170,19 +152,11 @@ pub async fn leave(ctx: &Context, msg: &Message){
         }
     };
 
-    stop(&ctx, &msg).await;                   
-    let manager = songbird::get(ctx)                                  
-        .await                                                          
-        .expect("Songbird Voice client placed in at initialisation.")   
-        .clone();                                                       
-    let _handler = manager.leave(guild.id).await;
-
-    // reemplazo desde stop(&ctx, &msg).await;  hasta el final de la funcion
-    /*clear_queue(&ctx, &msg).await;
+    clear_queue(&ctx, &msg).await;
     if let Some(handler_lock) = get_manager(&ctx, &msg).await {
         let mut handler = handler_lock.lock().await;
         handler.leave().await;
-    }*/
+    }
 
 }
 
