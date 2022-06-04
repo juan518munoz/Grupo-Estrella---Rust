@@ -38,6 +38,7 @@ impl EventHandler for Handler {
         let command_help = format!("{}{}", character_discord, "help");
         let command_play = format!("{}{}", character_discord, "play");
         let command_stop = format!("{}{}", character_discord, "stop");
+        let command_leave = format!("{}{}", character_discord, "leave");
         if msg.content == command_help {
             if let Err(why) = msg.channel_id.say(&ctx.http, "Aiuuuda").await {
                 println!("Error sending message: {:?}", why);
@@ -45,7 +46,10 @@ impl EventHandler for Handler {
         } else if msg.content.starts_with(&command_play) {
             mplayer::play(&ctx, &msg).await;
         } else if msg.content == command_stop {
-            mplayer::pause(&ctx, &msg).await;
+            mplayer::stop(&ctx, &msg).await;
+        }
+        else if msg.content == command_leave{
+            mplayer::leave(&ctx, &msg).await;
         }
     }
     async fn ready(&self, _: Context, ready: Ready) {
