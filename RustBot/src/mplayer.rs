@@ -1,10 +1,12 @@
 use std::env;
+use serenity::model::prelude::Guild;
 
 // This trait adds the `register_songbird` and `register_songbird_with` methods
 // to the client builder below, making it easy to install this voice client.
 // The voice client can be retrieved in any command using `songbird::get(ctx).await`.
 use songbird::input::ytdl_search;
 use songbird::SerenityInit;
+
 
 // Import the `Context` to handle commands.
 use serenity::client::Context;
@@ -86,12 +88,6 @@ pub async fn play(ctx: &Context, msg: &Message) {
 
         let output = String::from("Se agrego: '") + &song + "' a la cola";
         check_msg(msg.channel_id.say(&ctx.http, &output).await);
-    } else {
-        check_msg(
-            msg.channel_id
-                .say(&ctx.http, "Not in a voice channel to play in")
-                .await,
-        );
     }
 }
 
