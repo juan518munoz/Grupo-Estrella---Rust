@@ -1,10 +1,12 @@
 use std::env;
+use serenity::model::prelude::Guild;
 
 // This trait adds the `register_songbird` and `register_songbird_with` methods
 // to the client builder below, making it easy to install this voice client.
 // The voice client can be retrieved in any command using `songbird::get(ctx).await`.
 use songbird::input::ytdl_search;
 use songbird::SerenityInit;
+
 
 // Import the `Context` to handle commands.
 use serenity::client::Context;
@@ -83,12 +85,6 @@ pub async fn play(ctx: &Context, msg: &Message) {
 
         let output = String::from("Se agrego: '") + &song + "' a la cola";
         check_msg(msg.channel_id.say(&ctx.http, &output).await);
-    } else {
-        check_msg(
-            msg.channel_id
-                .say(&ctx.http, "Not in a voice channel to play in")
-                .await,
-        );
     }
 }
 
@@ -97,7 +93,7 @@ pub async fn play(ctx: &Context, msg: &Message) {
 // !!!!
 
 //Stop songs
-pub async fn pause(ctx: &Context, msg: &Message) {
+pub async fn stop(ctx: &Context, msg: &Message) {
     join(&ctx, &msg).await;
     let guild = msg.guild(&ctx.cache).await.unwrap();
     let guild_id = guild.id;
@@ -123,8 +119,10 @@ async fn add_queue() {}
 
 // Devuelve el string que contiene la cancion a ser buscada
 async fn get_song(ctx: &Context, msg: &Message) -> String {
+    let character_discord = env::var("CHARACTER_BOT").expect("Character not found");
     let input = String::from(&msg.content);
-    let song = input.replace("!play ", "");
+    let command_play = format!("{}{}", character_discord, "play ");
+    let song = input.replace(&command_play, "");
     String::from(song)
 }
 
@@ -133,4 +131,31 @@ fn check_msg(result: SerenityResult<Message>) {
     if let Err(why) = result {
         println!("Error sending message: {:?}", why);
     }
+}
+
+
+pub async fn leave(ctx: &Context, msg: &Message){
+    let guild = msg.guild(&ctx.cache).await.unwrap();
+
+    let channel_id = guild
+        .voice_states
+        .get(&msg.author.id)
+        .and_then(|voice_state| voice_state.channel_id);
+
+    let connect_to = match channel_id {
+        Some(channel) => channel,
+        None => {
+            // El usuario no esta en un canal de voz
+            check_msg(msg.reply(ctx, "No estas conectado a un canal").await);
+            return;
+        }
+    };
+
+    stop(&ctx, &msg).await;
+    let manager = songbird::get(ctx)
+        .await
+        .expect("Songbird Voice client placed in at initialisation.")
+        .clone();  
+    let _handler = manager.leave(guild.id).await;
+    
 }
