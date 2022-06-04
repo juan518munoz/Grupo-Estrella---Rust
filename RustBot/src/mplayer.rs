@@ -124,7 +124,7 @@ async fn add_queue() {}
 // Devuelve el string que contiene la cancion a ser buscada
 async fn get_song(ctx: &Context, msg: &Message) -> String {
     let input = String::from(&msg.content);
-    let song = input.replace("!play ", "");
+    let song = input.replace("!play", " ");
     String::from(song)
 }
 
