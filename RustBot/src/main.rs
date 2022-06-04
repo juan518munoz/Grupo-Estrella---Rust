@@ -4,6 +4,7 @@ use dotenv::dotenv;
 use std::env;
 
 mod mplayer;
+mod command;
 
 // This trait adds the `register_songbird` and `register_songbird_with` methods
 // to the client builder below, making it easy to install this voice client.
@@ -33,21 +34,26 @@ struct Handler;
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
-        let character_discord = env::var("CHARACTER_BOT").expect("Character not found");
-        //Create a Hash table or soemthing to manage commands of discord bot.
-        let command_help = format!("{}{}", character_discord, "help");
-        let command_play = format!("{}{}", character_discord, "play");
-        let command_stop = format!("{}{}", character_discord, "stop");
-        if msg.content == command_help {
+        let command = command::get_command(&msg);
+        
+        if command == "help" {
             if let Err(why) = msg.channel_id.say(&ctx.http, "Aiuuuda").await {
                 println!("Error sending message: {:?}", why);
             }
-        } else if msg.content.starts_with(&command_play) {
+        } else if command == "play" {
             mplayer::play(&ctx, &msg).await;
-        } else if msg.content == command_stop {
+        } else if command == "pause" {
             mplayer::pause(&ctx, &msg).await;
+        } else if command == "resume" {
+            mplayer::resume(&ctx, &msg).await;
+        } else if command == "skip" {
+            mplayer::skip(&ctx, &msg).await;
+        } else if command == "leave" {
+            mplayer::leave(&ctx, &msg).await;
         }
+
     }
+
     async fn ready(&self, _: Context, ready: Ready) {
         println!("{} is connected!", ready.user.name);
     }

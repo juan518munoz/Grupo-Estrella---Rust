@@ -26,6 +26,15 @@ use serenity::{
 
 struct Handler;
 
+// para funcion get_handler - borrar si en la funcion no se mencionan
+use std::sync::Arc;
+use songbird::Call;
+
+// !!!!
+// https://docs.rs/songbird/latest/songbird/driver/struct.Driver.html#
+// https://docs.rs/songbird/0.2.0/songbird/tracks/struct.Track.html#structfield.handle
+// !!!!
+
 // join voice channel
 pub async fn join(ctx: &Context, msg: &Message) {
     let guild = msg.guild(&ctx.cache).await.unwrap();
@@ -53,18 +62,11 @@ pub async fn join(ctx: &Context, msg: &Message) {
     let _handler = manager.join(guild_id, connect_to).await;
 }
 
-// play music
+// Reproduce cancion, si ya existe una reproduccion en curso, se agrega la cancion solicitada a la cola del reproductor
 pub async fn play(ctx: &Context, msg: &Message) {
     join(&ctx, &msg).await;
-    let guild = msg.guild(&ctx.cache).await.unwrap();
-    let guild_id = guild.id;
-
-    let manager = songbird::get(ctx)
-        .await
-        .expect("Songbird Voice client placed in at initialisation.")
-        .clone();
-
-    if let Some(handler_lock) = manager.get(guild_id) {
+    
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
         let mut handler = handler_lock.lock().await;
 
         let song = get_song(&ctx, &msg).await;
@@ -79,7 +81,8 @@ pub async fn play(ctx: &Context, msg: &Message) {
                 return;
             }
         };
-        handler.play_source(source);
+        handler.enqueue_source(source);
+
 
         let output = String::from("Se agrego: '") + &song + "' a la cola";
         check_msg(msg.channel_id.say(&ctx.http, &output).await);
@@ -92,12 +95,45 @@ pub async fn play(ctx: &Context, msg: &Message) {
     }
 }
 
-// !!!!
-// https://docs.rs/songbird/latest/songbird/driver/struct.Driver.html#
-// !!!!
+// Pausa el reproductor de musica
+pub async fn pause(ctx: &Context, msg: &Message) {
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
+        let mut handler = handler_lock.lock().await;
+        let queue = handler.queue();
+        queue.pause();
+        
+        let message = String::from("Paused all songs");
+        check_msg(msg.channel_id.say(&ctx.http, &message).await);
+    }
+}
+
+// Resume el reproductor de musica
+pub async fn resume(ctx: &Context, msg: &Message) {
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
+        let mut handler = handler_lock.lock().await;
+        let queue = handler.queue();
+        queue.resume();
+        
+        let message = String::from("Resumed all songs");
+        check_msg(msg.channel_id.say(&ctx.http, &message).await);
+    }
+
+}
+
+// Saltea la cancion actual en el reproductor de musica
+pub async fn skip(ctx: &Context, msg: &Message) {
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
+        let mut handler = handler_lock.lock().await;
+        let queue = handler.queue();
+        queue.skip();
+        
+        let message = String::from("Skipped current song");
+        check_msg(msg.channel_id.say(&ctx.http, &message).await);
+    }
+}
 
 //Stop songs
-pub async fn pause(ctx: &Context, msg: &Message) {
+pub async fn stop(ctx: &Context, msg: &Message) {
     join(&ctx, &msg).await;
     let guild = msg.guild(&ctx.cache).await.unwrap();
     let guild_id = guild.id;
@@ -115,16 +151,73 @@ pub async fn pause(ctx: &Context, msg: &Message) {
     }
 }
 
-// Resume el reproductor de musica
-pub async fn resume() {}
+// Quita al bot del canal de voz
+pub async fn leave(ctx: &Context, msg: &Message){
+    let guild = msg.guild(&ctx.cache).await.unwrap();
 
-// Añade una cancion a la cola de reproduccion
-async fn add_queue() {}
+    let channel_id = guild
+        .voice_states
+        .get(&msg.author.id)
+        .and_then(|voice_state| voice_state.channel_id);
+
+    let connect_to = match channel_id {
+        Some(channel) => channel,
+        None => {
+            // El usuario no esta en un canal de voz
+            check_msg(msg.reply(ctx, "No estas conectado a un canal").await);
+            // Agregar verficacion que el bot este en un canal de voz
+            return;
+        }
+    };
+
+    stop(&ctx, &msg).await;                   
+    let manager = songbird::get(ctx)                                  
+        .await                                                          
+        .expect("Songbird Voice client placed in at initialisation.")   
+        .clone();                                                       
+    let _handler = manager.leave(guild.id).await;
+
+    // reemplazo desde stop(&ctx, &msg).await;  hasta el final de la funcion
+    /*clear_queue(&ctx, &msg).await;
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
+        let mut handler = handler_lock.lock().await;
+        handler.leave().await;
+    }*/
+
+}
+
+// Detiene y elemina la reproduccion de todas las canciones en el reproductor de musica
+async fn clear_queue(ctx: &Context, msg: &Message) {
+    if let Some(handler_lock) = get_manager(&ctx, &msg).await {
+        let mut handler = handler_lock.lock().await;
+        let queue = handler.queue();
+
+        // iterate over the queue and clear it
+        let queue_len = queue.len();
+        for _ in 0..queue_len {
+            queue.skip();
+        }
+    }
+}
+
+// Devuelve la llamada asociada al servidor
+async fn get_manager(ctx: &Context, msg: &Message) -> Option<Arc<Mutex<Call>>> {
+    let guild = msg.guild(&ctx.cache).await.unwrap();
+    let guild_id = guild.id;
+
+    let manager = songbird::get(ctx)
+        .await
+        .expect("Songbird Voice client placed in at initialisation.")
+        .clone();
+    
+    manager.get(guild_id)
+}
 
 // Devuelve el string que contiene la cancion a ser buscada
-async fn get_song(ctx: &Context, msg: &Message) -> String {
-    let input = String::from(&msg.content);
-    let song = input.replace("!play ", "");
+async fn get_song(_ctx: &Context, msg: &Message) -> String {
+    let mut input = String::from(&msg.content);
+    input.remove(0); // remove prefix
+    let song = input.replace("play ", "");
     String::from(song)
 }
 
