@@ -7,6 +7,10 @@ use serenity::model::prelude::Guild;
 use songbird::input::ytdl_search;
 use songbird::SerenityInit;
 
+// Usado para el timer
+use tokio::time::Duration;
+//use tokio::time::sleep;
+use songbird::tracks::TrackQueue;
 
 // Import the `Context` to handle commands.
 use serenity::client::Context;
@@ -88,6 +92,9 @@ pub async fn play(ctx: &Context, msg: &Message) {
 
         let output = String::from("Se agrego: '") + &song + "' a la cola";
         check_msg(msg.channel_id.say(&ctx.http, &output).await);
+
+        // llamar funcion que eventualmente haga al bot salir de la llamada cuando se termine la playlist
+        // leave_on_empty_queue(&ctx, &msg, handler.queue()).await; // rompe todo
     }
 }
 
@@ -128,25 +135,6 @@ pub async fn skip(ctx: &Context, msg: &Message) {
     }
 }
 
-//Stop songs
-pub async fn stop(ctx: &Context, msg: &Message) {
-    join(&ctx, &msg).await;
-    let guild = msg.guild(&ctx.cache).await.unwrap();
-    let guild_id = guild.id;
-
-    let manager = songbird::get(ctx)
-        .await
-        .expect("Songbird Voice client placed in at initialisation.")
-        .clone();
-
-    if let Some(handler_lock) = manager.get(guild_id) {
-        let mut handler = handler_lock.lock().await;
-        handler.stop();
-        let message = String::from("Stopped all songs");
-        check_msg(msg.channel_id.say(&ctx.http, &message).await);
-    }
-}
-
 // Quita al bot del canal de voz
 pub async fn leave(ctx: &Context, msg: &Message){
     let guild = msg.guild(&ctx.cache).await.unwrap();
@@ -166,19 +154,11 @@ pub async fn leave(ctx: &Context, msg: &Message){
         }
     };
 
-    stop(&ctx, &msg).await;                   
-    let manager = songbird::get(ctx)                                  
-        .await                                                          
-        .expect("Songbird Voice client placed in at initialisation.")   
-        .clone();                                                       
-    let _handler = manager.leave(guild.id).await;
-
-    // reemplazo desde stop(&ctx, &msg).await;  hasta el final de la funcion
-    /*clear_queue(&ctx, &msg).await;
+    clear_queue(&ctx, &msg).await;                   
     if let Some(handler_lock) = get_manager(&ctx, &msg).await {
         let mut handler = handler_lock.lock().await;
         handler.leave().await;
-    }*/
+    }
 
 }
 
@@ -194,6 +174,24 @@ async fn clear_queue(ctx: &Context, msg: &Message) {
             queue.skip();
         }
     }
+}
+
+// Chequea temporalmente si la playlist esta vacia, si lo esta se desconecta del canal de voz
+async fn leave_on_empty_queue(ctx: &Context, msg: &Message, queue: &TrackQueue) {
+    
+    loop {
+        if queue.is_empty() {
+            let message = String::from("No more songs in queue, leaving voice channel");
+            check_msg(msg.channel_id.say(&ctx.http, &message).await);
+    
+            if let Some(handler_lock) = get_manager(&ctx, &msg).await {  //
+                let mut handler = handler_lock.lock().await;             //
+                let _err = handler.leave().await;                   // nunca ejecuta
+            }
+            
+        } 
+        tokio::time::sleep(Duration::from_millis(5000)).await;       
+    }    
 }
 
 // Devuelve la llamada asociada al servidor
