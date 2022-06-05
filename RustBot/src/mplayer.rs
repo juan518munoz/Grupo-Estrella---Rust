@@ -210,10 +210,11 @@ async fn get_manager(ctx: &Context, msg: &Message) -> Option<Arc<Mutex<Call>>> {
 }
 
 // Devuelve el string que contiene la cancion a ser buscada
-async fn get_song(_ctx: &Context, msg: &Message) -> String {
-    let mut input = String::from(&msg.content);
-    input.remove(0); // remove prefix
-    let song = input.replace("play ", "");
+async fn get_song(ctx: &Context, msg: &Message) -> String {
+    let character_discord = env::var("CHARACTER_BOT").expect("Character not found");
+    let input = String::from(&msg.content);
+    let command_play = format!("{}{}", character_discord, "play ");
+    let song = input.replace(&command_play, "");
     String::from(song)
 }
 
