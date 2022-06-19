@@ -6,6 +6,29 @@
 -   match looks like pattern matching.
 -   Shadow vs mut.
 -   Tuples (has Destructuring) every unit of tuple has his own type (Fixed Length).
+-   Data Types: Integers, Floating Points, booleans, characters, Tuple, Array.
+-   Integer Overflow
 -   Array (Fixed length).
--   Statements and Expressions.
+-   Statements and Expressions (Careful semicolon ;).
 -   Garbage collector vs OwnerShip.
+-   Stack and Heap.
+-   OwnerShip Rules.
+-   String ownership.
+-   clone().
+-   Shallow copy vs Deep Copy.
+-   Traits Copy for basic data types.
+-   OwnerShip and Functions (Careful).
+-   References (pass ownership without return) && Borrowing(Create a reference).
+-   Mutable references.
+-   Dangling references.
+-   String slices.
+-   Structs.
+-   Struct update syntax (..)
+-   Remember ownership when update struct applies.
+-   Unit Like Structs, Tuple Structs.
+-   Methods, self and Associated functions.
+-   Enums, Option Enum vs Null values.
+-   Option<T> Enum.
+-   Pattern matching.
+-   Catch all pattern.
+

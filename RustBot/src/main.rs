@@ -1,10 +1,8 @@
 extern crate dotenv;
 
 use dotenv::dotenv;
+use mplayer::List;
 use std::env;
-
-mod mplayer;
-mod command;
 
 // This trait adds the `register_songbird` and `register_songbird_with` methods
 // to the client builder below, making it easy to install this voice client.
@@ -29,29 +27,19 @@ use serenity::{
     Result as SerenityResult,
 };
 
+mod mplayer;
+#[path = "./option_command.rs"]
+pub mod option_command;
+
 struct Handler;
 
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
-        let command = command::get_command(&msg);
-        
-        if command == "help" {
-            if let Err(why) = msg.channel_id.say(&ctx.http, "Aiuuuda").await {
-                println!("Error sending message: {:?}", why);
-            }
-        } else if command == "play" {
-            mplayer::play(&ctx, &msg).await;
-        } else if command == "pause" {
-            mplayer::pause(&ctx, &msg).await;
-        } else if command == "resume" {
-            mplayer::resume(&ctx, &msg).await;
-        } else if command == "skip" {
-            mplayer::skip(&ctx, &msg).await;
-        } else if command == "leave" {
-            mplayer::leave(&ctx, &msg).await;
-        }
-
+        let mut songs_list = mplayer::initialize();
+        println!("a{:?}", songs_list);
+        let command_option: String = option_command::get_command(&msg);
+        option_command::run_command(&command_option, &msg, &ctx, &mut songs_list).await;
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
