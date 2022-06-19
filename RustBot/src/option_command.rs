@@ -1,8 +1,9 @@
-use crate::mplayer::List;
 use crate::{mplayer, CommandResult};
 use serenity::client::Context;
 use serenity::model::channel::Message;
 use std::env;
+
+use crate::list;
 
 pub fn get_command(msg: &Message) -> String {
     let character_discord = env::var("CHARACTER_BOT").expect("Character not found");
@@ -28,19 +29,18 @@ pub async fn run_command(
     command: &str,
     msg: &Message,
     ctx: &Context,
-    mut songs_list: &mut List,
 ) -> CommandResult {
     match command {
         "help" => Ok(mplayer::help(ctx, msg).await),
         "play" => {
-            let result = Ok(mplayer::play(ctx, msg, songs_list).await);
+            let result = Ok(mplayer::play(ctx, msg).await);
             return result;
         }
         "pause" => Ok(mplayer::pause(ctx, msg).await),
         "resume" => Ok(mplayer::resume(ctx, msg).await),
         "skip" => Ok(mplayer::skip(ctx, msg).await),
         "leave" => Ok(mplayer::leave(ctx, msg).await),
-        "list" => Ok(mplayer::show_list(&songs_list)),
+        "list" => Ok(mplayer::list_ranking(ctx, msg).await),
         _ => Ok({}),
     }
 }

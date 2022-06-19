@@ -10,3 +10,4 @@ serenity = { version = "0.10", default-features = false, features = ["cache", "f
 tokio = { version = "1.18.2", features = ["macros", "rt-multi-thread", "signal"]}
 songbird = { version = "0.2.2", features = ["builtin-queue"] }
 dotenv = "0.15.0"
+async-recursion = "1.0.0"

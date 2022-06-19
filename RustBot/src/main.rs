@@ -1,7 +1,6 @@
 extern crate dotenv;
 
 use dotenv::dotenv;
-use mplayer::List;
 use std::env;
 
 // This trait adds the `register_songbird` and `register_songbird_with` methods
@@ -27,19 +26,21 @@ use serenity::{
     Result as SerenityResult,
 };
 
+mod list;
 mod mplayer;
 #[path = "./option_command.rs"]
 pub mod option_command;
 
 struct Handler;
 
+
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
-        let mut songs_list = mplayer::initialize();
-        println!("a{:?}", songs_list);
+        // create empty list
+        //let mut songs_list = list::empty_list();
         let command_option: String = option_command::get_command(&msg);
-        option_command::run_command(&command_option, &msg, &ctx, &mut songs_list).await;
+        option_command::run_command(&command_option, &msg, &ctx).await;
     }
 
     async fn ready(&self, _: Context, ready: Ready) {

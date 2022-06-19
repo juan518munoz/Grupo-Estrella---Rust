@@ -1,5 +1,8 @@
 use serenity::model::prelude::Guild;
-use std::env;
+use std::{env, fs};
+use std::io::Write;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 
 // This trait adds the `register_songbird` and `register_songbird_with` methods
 // to the client builder below, making it easy to install this voice client.
@@ -34,28 +37,7 @@ use serenity::{
 use songbird::Call;
 use std::sync::Arc;
 
-use List::{Cons, Nil};
-
-#[derive(Debug, Clone)]
-pub enum List {
-    Cons(String, Box<List>),
-    Nil,
-}
-
-trait ConsList {
-    fn cons(self, x: String) -> List;
-    fn new() -> List;
-}
-
-impl ConsList for List {
-    fn cons(self, x: String) -> List {
-        Cons(x, Box::new(self))
-    }
-
-    fn new() -> List {
-        Nil
-    }
-}
+use crate::list;
 
 // https://docs.rs/songbird/latest/songbird/driver/struct.Driver.html#
 // https://docs.rs/songbird/0.2.0/songbird/tracks/struct.Track.html#structfield.handle
@@ -91,6 +73,7 @@ pub async fn join(ctx: &Context, msg: &Message) {
 pub async fn help(ctx: &Context, msg: &Message) {
     let _ = msg.channel_id.say(&ctx.http, "Ayuda!").await;
 }
+
 pub async fn default_message(ctx: &Context, msg: &Message) {
     let _ = msg
         .channel_id
@@ -102,7 +85,7 @@ pub async fn default_message(ctx: &Context, msg: &Message) {
 }
 
 // Reproduce cancion, si ya existe una reproduccion en curso, se agrega la cancion solicitada a la cola del reproductor
-pub async fn play(ctx: &Context, msg: &Message, mut songs_list: &mut List) {
+pub async fn play(ctx: &Context, msg: &Message){
     join(&ctx, &msg).await;
     let handler_lock = match get_manager(&ctx, &msg).await {
         Some(it) => it,
@@ -111,18 +94,23 @@ pub async fn play(ctx: &Context, msg: &Message, mut songs_list: &mut List) {
     let mut handler = handler_lock.lock().await;
 
     let song = get_song(&ctx, &msg).await;
-    //songs_list = &songs_list.cons(song.clone());
-    let mut list: List = songs_list.clone();
-    list = list.cons(song.clone());
-    songs_list = &mut list;
-    println!("{:?}", songs_list);
+    
+    ///////////////////////////////////////////////////////////////
+    let mut file = fs::OpenOptions::new()
+      .write(true)
+      .append(true)
+      .open("src/song_ranking.txt")
+      .unwrap();
+
+    write!(file, "{}\n", song).unwrap();
+    //////////////////////////////////////////////////////////////
+
     let source = match songbird::input::ytdl_search(&song).await {
         Ok(source) => source,
         Err(why) => {
             println!("Err starting source: {:?}", why);
 
             check_msg(msg.channel_id.say(&ctx.http, "Error sourcing song").await);
-
             return;
         }
     };
@@ -131,8 +119,6 @@ pub async fn play(ctx: &Context, msg: &Message, mut songs_list: &mut List) {
     let output = String::from("Se agrego: '") + &song + "' a la cola";
     check_msg(msg.channel_id.say(&ctx.http, &output).await);
 
-    // llamar funcion que eventualmente haga al bot salir de la llamada cuando se termine la playlist
-    // leave_on_empty_queue(&ctx, &msg, handler.queue()).await; // rompe todo
 }
 
 // Pausa el reproductor de musica
@@ -208,23 +194,6 @@ async fn clear_queue(ctx: &Context, msg: &Message) {
     }
 }
 
-// Chequea temporalmente si la playlist esta vacia, si lo esta se desconecta del canal de voz
-async fn leave_on_empty_queue(ctx: &Context, msg: &Message, queue: &TrackQueue) {
-    loop {
-        if queue.is_empty() {
-            let message = String::from("No more songs in queue, leaving voice channel");
-            check_msg(msg.channel_id.say(&ctx.http, &message).await);
-
-            if let Some(handler_lock) = get_manager(&ctx, &msg).await {
-                //
-                let mut handler = handler_lock.lock().await; //
-                let _err = handler.leave().await; // nunca ejecuta
-            }
-        }
-        tokio::time::sleep(Duration::from_millis(5000)).await;
-    }
-}
-
 // Devuelve la llamada asociada al servidor
 async fn get_manager(ctx: &Context, msg: &Message) -> Option<Arc<Mutex<Call>>> {
     let guild = msg.guild(&ctx.cache).await.unwrap();
@@ -246,17 +215,47 @@ async fn get_song(ctx: &Context, msg: &Message) -> String {
     String::from(song)
 }
 
-/// Checks that a message successfully sent; if not, then logs why to stdout.
+// Checks that a message successfully sent; if not, then logs why to stdout.
 fn check_msg(result: SerenityResult<Message>) {
     if let Err(why) = result {
         println!("Error sending message: {:?}", why);
     }
 }
 
-pub fn initialize() -> List {
-    List::new()
+// list ranking of songs
+pub async fn list_ranking(ctx: &Context, msg: &Message) {
+    let mut songs_list = list::List::Nil;
+
+    let filename = "src/song_ranking.txt";
+    // Open the file in read-only mode (ignoring errors).
+    let file = File::open(filename).unwrap();
+    let reader = BufReader::new(file);
+
+    // Read the file line by line using the lines() iterator from std::io::BufRead.
+    for (_index, song_name) in reader.lines().enumerate() {
+        let song_name = song_name.unwrap(); // Ignore errors.
+        // add song to list
+        list::add_to_list(&mut songs_list, song_name);
+    }
+
+    let mut message = String::from("Lista de canciones:\n");
+    
+    // ordenamos lista
+    let sorted_song_list = list::sort_list(songs_list);
+
+    // pasamos lista a vector
+    let songs_vec = list::list_to_vec(&sorted_song_list);
+
+    // iterate vector and add each tuple to message
+    for (_index, tupla) in songs_vec.iter().enumerate() {
+        let song_name = tupla.0.clone();
+        let song_rank = tupla.1;
+        let song_rank_str = format!("{}, played: {} time(s)\n", song_name, song_rank);
+        message.push_str(&song_rank_str);	
+    }
+
+    // enviamos mensaje con string
+    check_msg(msg.channel_id.say(&ctx.http, &message).await);
+
 }
 
-pub fn show_list(list: &List) {
-    println!("{:?}", list);
-}
